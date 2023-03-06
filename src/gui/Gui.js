@@ -1,7 +1,7 @@
 
 
 import { Vector } from "./math.js"
-import { getUniqueIdentificator, mergeObject } from "./utility.js"
+import { getUniqueIdentificator, mergeObject } from "./Utility.js"
 
 
 export default class Gui {
