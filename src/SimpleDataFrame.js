@@ -82,9 +82,7 @@ export default class SimpleDataFrame {
 
         this.maxsize = this.table.size
         let rowWidths = this.getCellBuildingInfo()
-        console.log(rowWidths)
         let tableLength = (rowWidths.sum + rowWidths.length) * this.fontSize * 0.5
-        console.log({ tableLength })
         this.table.setSize(Math.min(this.maxsize.x, tableLength), this.maxsize.y)
 
 
@@ -105,7 +103,7 @@ export default class SimpleDataFrame {
 
                 this.tableComponents[i][j]
                     .setFontSize(this.fontSize)
-                    .setText(this.df[i][j])
+                    .setText(this.df[i][j].toString())
                     .setDecoration(Styles.TableCell.main)
                     .setColor("white")
                 if (this.isVertical) {
@@ -131,6 +129,14 @@ export default class SimpleDataFrame {
         this.fontSize = size
         if (this.table)
             this.refreshTable()
+    }
+    addColumn(name, data) {
+
+        for (let i = 0; i <= data.length; i++) {
+            if (this.df[i] == undefined)
+                this.df[i] = []
+            this.df[i].push(i == 0 ? name : data[i - 1])
+        }
     }
 
 

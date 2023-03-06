@@ -132,6 +132,22 @@ export class NumberRange {
     isNumberIn_exclusive(number) {
         return number >= this.start && number < this.end
     }
+    toString() {
+        return `${this.start} - ${this.end}`
+    }
+    middle() {
+        return (this.start + this.end) / 2
+    }
+    allValues(inclusive = false) {
+        let result = []
+        for (let i = this.start; i < this.end + inclusive; i++) {
+            result.push(i)
+        }
+        return result
+    }
+    length(inclusive = false) {
+        return this.end - this.start + inclusive
+    }
 
 }
 let next_id = 0
