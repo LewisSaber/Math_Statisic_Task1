@@ -2,8 +2,6 @@ import mainGui, { functionMerger, getImg, mergeObject } from "./gui/Utility.js"
 import Gui from "./gui/Gui.js"
 import { Button } from "./gui/Button.js"
 import Styles from "./gui/Styles.js"
-import { TextField } from "./gui/TextField.js"
-import Input from "./gui/Input.js"
 import SimpleDataFrame from "./SimpleDataFrame.js"
 import discreteDataSample from "../data.js"
 import { Label } from "./gui/Label.js"
@@ -26,7 +24,7 @@ export default class App {
         })
 
         this.taskGUIs = [
-            new Gui().setSize(-1, 50).setDecoration(Styles.BackGround.task1)
+            new Gui().setSize(-1, 39).setDecoration(Styles.BackGround.task1)
         ]
 
 
@@ -65,7 +63,7 @@ export default class App {
         let df = this.normalizeDiscreteSample(discreteDataSample)
         df.sortByRow("Число")
         let containers = this.CreateVerticalContainers(
-            [4, 7, 9, 6, 4, 10],
+            [4, 7, 9, 6, 4, 3],
             1.3,
             this.taskGUIs[0]
         )
@@ -503,8 +501,8 @@ export default class App {
             for (let i = 0; i < COUNT_MOMENTS; i++) {
                 df_momentum.addDictionary({
                     "Момент": i,
-                    "Початковий(m)": statistical_data.moments.starting[i],
-                    "Центральний(m)": statistical_data.moments.central[i]
+                    "Початковий(m)": +statistical_data.moments.starting[i].toFixed(2),
+                    "Центральний(m)": +statistical_data.moments.central[i].toFixed(2)
                 })
             }
             df_momentum.isVertical = false
@@ -531,7 +529,7 @@ export default class App {
             statistical_data.quantils = quantils
             statistical_data.decils = decils
 
-            let quantilContainer = new Gui().setSize(4, 4).setPosition(3, 0.2).addParent(containers[5])
+            let quantilContainer = new Gui().setSize(4, 2.5).setPosition(3, 0.2).addParent(containers[5])
             new Label()
                 .setText("Квантилі")
                 .setColor("white")
@@ -548,7 +546,7 @@ export default class App {
             quantils.refreshTable()
 
 
-            let decilsContainer = new Gui().setSize(10, 4).setPosition(10, 0.2).addParent(containers[5])
+            let decilsContainer = new Gui().setSize(10, 2.5).setPosition(10, 0.2).addParent(containers[5])
             new Label()
                 .setText("Децилі")
                 .setColor("white")
@@ -608,27 +606,27 @@ export default class App {
 
     normalizeDiscreteSample(sample) {
         let arr = sample.split(" ").map(Number)
-        let counter = {
-            '0': 35,
-            '1': 38,
-            '2': 20,
-            '3': 6,
-            '4': 1,
-        }
         // let counter = {
-        //     '-1': 20,
-        //     '-2': 4,
-        //     '-3': 6,
-        //     '-4': 1,
-        //     '-5': 12,
-        //     '0': 15,
-        //     '1': 23,
-        //     '2': 7,
-        //     '3': 8,
-        //     '4': 12,
-        //     '5': 5,
-        //     '6': 2
-        // } //this.countSymbols(arr)
+        //     '0': 35,
+        //     '1': 38,
+        //     '2': 20,
+        //     '3': 6,
+        //     '4': 1,
+        // }
+        let counter = {
+            '-1': 20,
+            '-2': 4,
+            '-3': 6,
+            '-4': 1,
+            '-5': 12,
+            '0': 15,
+            '1': 23,
+            '2': 7,
+            '3': 8,
+            '4': 12,
+            '5': 5,
+            '6': 2
+        } //this.countSymbols(arr)
         let df = new SimpleDataFrame(["Число", "Частота"])
         for (const number in counter) {
             df.addDictionary({

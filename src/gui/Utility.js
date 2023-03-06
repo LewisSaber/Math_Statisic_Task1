@@ -2,109 +2,115 @@ import { Button } from "./Button.js";
 import Gui from "./Gui.js";
 
 
+export function loadUtility() {
+    HTMLElement.prototype.setSize = function (sizeVector, type = "px") {
 
-HTMLElement.prototype.setSize = function (sizeVector, type = "px") {
+        this.style.width = sizeVector.x + type
+        this.style.height = sizeVector.y + type
+    }
+    HTMLElement.prototype.setPosition = function (pozitionVector, type = "px") {
+        this.style.left = pozitionVector.x + type
+        this.style.top = pozitionVector.y + type
+    }
+    HTMLElement.prototype.setBackgroundImage = function (url) {
 
-    this.style.width = sizeVector.x + type
-    this.style.height = sizeVector.y + type
-}
-HTMLElement.prototype.setPosition = function (pozitionVector, type = "px") {
-    this.style.left = pozitionVector.x + type
-    this.style.top = pozitionVector.y + type
-}
-HTMLElement.prototype.setBackgroundImage = function (url) {
+        this.style.backgroundImage = url == "none" ? url : `url(${url})`
+    }
+    HTMLElement.prototype.setZLayer = function (layer) {
+        this.style.zIndex = layer
+    }
+    HTMLElement.prototype.disablePointerEvents = function () {
+        this.style.pointerEvents = "none"
+    }
+    HTMLElement.prototype.disableContextMenu = function () {
+        this.oncontextmenu = () => false
+    }
+    HTMLElement.prototype.applyStyle = function (style) {
+        if (style instanceof Object)
 
-    this.style.backgroundImage = url == "none" ? url : `url(${url})`
-}
-HTMLElement.prototype.setZLayer = function (layer) {
-    this.style.zIndex = layer
-}
-HTMLElement.prototype.disablePointerEvents = function () {
-    this.style.pointerEvents = "none"
-}
-HTMLElement.prototype.disableContextMenu = function () {
-    this.oncontextmenu = () => false
-}
-HTMLElement.prototype.applyStyle = function (style) {
-    if (style instanceof Object)
-
-        for (const key in style) {
-            this.style.setProperty(key, style[key])
+            for (const key in style) {
+                this.style.setProperty(key, style[key])
+            }
+        else {
+            console.warn("applying bad style", style)
         }
-    else {
-        console.warn("applying bad style", style)
+
+    }
+    HTMLElement.prototype.applyAttributes = function (attributes) {
+
+        if (attributes instanceof Object) {
+
+            for (const key in attributes) {
+                this.setAttribute(key, attributes[key])
+            }
+        }
+        else {
+            console.warn("applying bad attribute", attributes)
+        }
+
     }
 
-}
-HTMLElement.prototype.applyAttributes = function (attributes) {
-
-    if (attributes instanceof Object) {
-
-        for (const key in attributes) {
-            this.setAttribute(key, attributes[key])
-        }
-    }
-    else {
-        console.warn("applying bad attribute", attributes)
+    String.prototype.color = function (color) {
+        let elem = document.createElement("span")
+        elem.style.color = color
+        elem.innerHTML = this
+        return elem.outerHTML
     }
 
+    String.prototype.capitalize = function () {
+
+        return this[0].toUpperCase() + this.substring(1)
+    }
+
+
+    Object.defineProperty(Object.prototype, 'get', {
+        get: function () {
+            return function (key, default_value = 0) {
+                return this[key] || default_value;
+            };
+        },
+        configurable: true,
+        enumerable: false,
+
+    });
+
+
+    Object.defineProperty(Array.prototype, 'sum', {
+        get: function () {
+            let sum = 0
+            for (let i = 0; i < this.length; i++) {
+                sum += this[i]
+            }
+            return sum
+        },
+        enumerable: false
+    });
+
+    Object.defineProperty(Array.prototype, 'max', {
+        get: function () {
+            let max = 0
+            for (let i = 0; i < this.length; i++) {
+                if (max < this[i])
+                    max = this[i]
+            }
+            return max
+        },
+        enumerable: false
+    });
+
+    Object.defineProperty(Array.prototype, 'min', {
+        get: function () {
+            let min = Infinity
+            for (let i = 0; i < this.length; i++) {
+                if (min > this[i])
+                    min = this[i]
+            }
+            return min
+        },
+        enumerable: false
+    });
+
 }
-
-String.prototype.color = function (color) {
-    let elem = document.createElement("span")
-    elem.style.color = color
-    elem.innerHTML = this
-    return elem.outerHTML
-}
-
-String.prototype.capitalize = function () {
-
-    return this[0].toUpperCase() + this.substring(1)
-}
-
-
-Object.defineProperty(Object.prototype, 'get', {
-    value: function (key, default_value = 0) {
-        return this[key] || default_value
-    },
-    enumerable: false
-});
-
-
-Object.defineProperty(Array.prototype, 'sum', {
-    get: function () {
-        let sum = 0
-        for (let i = 0; i < this.length; i++) {
-            sum += this[i]
-        }
-        return sum
-    },
-    enumerable: false
-});
-
-Object.defineProperty(Array.prototype, 'max', {
-    get: function () {
-        let max = 0
-        for (let i = 0; i < this.length; i++) {
-            if (max < this[i])
-                max = this[i]
-        }
-        return max
-    },
-    enumerable: false
-});
-
-Object.defineProperty(Array.prototype, 'min', {
-    get: function () {
-        let min = Infinity
-        for (let i = 0; i < this.length; i++) {
-            if (min > this[i])
-                min = this[i]
-        }
-        return min
-    },
-    enumerable: false
-});
 
 
 export function createEmptyArray(width, height) {
