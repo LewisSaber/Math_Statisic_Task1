@@ -1,5 +1,5 @@
 import Gui from "./Gui.js";
-import { mergeObject } from "./utility.js";
+import { mergeObject } from "./Utility.js";
 
 
 
