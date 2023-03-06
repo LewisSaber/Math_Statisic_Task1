@@ -1,4 +1,4 @@
-import mainGui, { functionMerger, getImg, mergeObject } from "./gui/utility.js"
+import mainGui, { functionMerger, getImg, mergeObject } from "./gui/Utility.js"
 import Gui from "./gui/Gui.js"
 import { Button } from "./gui/Button.js"
 import Styles from "./gui/Styles.js"
